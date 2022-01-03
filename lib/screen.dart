@@ -28,7 +28,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: CustomAppBar(
           text: const Text(
             'My Wallet',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+                fontSize: 16),
           ),
           icon: IconButton(
               icon: Image.asset('images/qr-code 1.png'), onPressed: null),
@@ -45,13 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
             const Center(
               child: Text(
                 'Balance',
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 12),
-            Center(
+            const Center(
               child: Text(
                 '\$22,180.00',
-                style: Theme.of(context).textTheme.headline4,
+                style: TextStyle(color: Colors.black, fontSize: 24),
               ),
             ),
             const SizedBox(height: 15),
