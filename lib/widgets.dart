@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_clone/model/bank_model.dart';
 
 import 'model/card_model.dart';
 
