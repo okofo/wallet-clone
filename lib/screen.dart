@@ -19,97 +19,102 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final _cards = context.read<CardsProvider>();
-    final _accounts = context.read<BankProvider>();
+    final _cards = context.watch<CardsProvider>();
+    final _accounts = context.watch<BankProvider>();
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: CustomAppBar(
-          text: const Text(
-            'My Wallet',
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-                fontSize: 16),
-          ),
-          icon: IconButton(
-              icon: Image.asset('images/qr-code 1.png'), onPressed: null),
-          avatar: CircleAvatar(
-            child: Image.asset('images/unsplash_ILip77SbmOE.png'),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: false,
+        title: const Text(
+          'My Wallet',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+            fontSize: 16,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Image.asset('images/qr-code 1.png'),
+            onPressed: () {},
+          ),
+          const SizedBox(width: 10),
+          CircleAvatar(
+            child: Image.asset('images/unsplash_ILip77SbmOE.png'),
+          ),
+          const SizedBox(width: 10),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 30),
             const Center(
               child: Text(
                 'Balance',
-                style:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                ),
               ),
             ),
             const SizedBox(height: 12),
             const Center(
               child: Text(
                 '\$22,180.00',
-                style: TextStyle(color: Colors.black, fontSize: 24),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                CustomButton(
-                  text: Text('Add'),
-                ),
+                CustomButton(text: Text('Add')),
                 SizedBox(width: 15.0),
-                CustomButton(
-                  text: Text('Withdraw'),
-                ),
+                CustomButton(text: Text('Withdraw')),
               ],
             ),
             const SizedBox(height: 15),
-            const Divider(thickness: 2),
-            const Padding(
-              padding: EdgeInsets.only(
-                  left: 20.0, top: 15.0, right: 17.0, bottom: 20.0),
-              child: Text('Bank accounts'),
+            const Divider(thickness: 1),
+            const SizedBox(height: 40),
+            const PageHeader(
+              title: "Bank Accounts",
+              bottom: 10,
             ),
-            SizedBox(
-              height: 200,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: _accounts.bankList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return AccountsListTileItem(
-                      account: _accounts.bankList[index]);
-                },
-              ),
+            ...List.generate(_cards.cardList.length, (index) {
+              final data = _accounts.bankList[index];
+              return AccountsListTileItem(
+                leading: data.logo,
+                title: data.name,
+                subtitle: data.accountNumber,
+                trailing: data.amount,
+              );
+            }),
+            const SizedBox(height: 40),
+            const PageHeader(
+              title: "Cards",
+              bottom: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.only(
-                  left: 20.0, top: 10.0, right: 17.0, bottom: 0.0),
-              child: Text('Cards'),
-            ),
-            SizedBox(
-                height: 200,
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: _cards.cardList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CardsListTileItem(
-                        cards: _cards.cardList[index],
-                      );
-                    })),
+            ...List.generate(_cards.cardList.length, (index) {
+              final data = _cards.cardList[index];
+              return AccountsListTileItem(
+                leading: data.logo,
+                title: data.name,
+                subtitle: data.cardNumber,
+                trailing: data.amount,
+              );
+            }),
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
