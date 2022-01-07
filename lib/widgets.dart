@@ -15,8 +15,12 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(left: 20.0, right: 20.0, top: 40, bottom: 20.0),
+      padding: const EdgeInsets.only(
+        left: 20.0,
+        right: 20.0,
+        top: 40,
+        bottom: 20.0,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [text, const Spacer(), icon, avatar],
@@ -51,22 +55,29 @@ class CustomButton extends StatelessWidget {
 }
 
 class AccountsListTileItem extends StatelessWidget {
-  final Account account;
+  final String? leading;
+  final String? title;
+  final String? subtitle;
+  final String? trailing;
+
   const AccountsListTileItem({
     Key? key,
-    required this.account,
+    this.leading,
+    this.title,
+    this.subtitle,
+    this.trailing,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: IconButton(
-        icon: Image.asset(account.logo ?? ''),
+        icon: Image.asset(leading ?? ''),
         onPressed: null,
       ),
-      title: Text(account.name ?? ''),
-      subtitle: Text(account.accountNumber ?? ''),
-      trailing: Text(account.amount ?? ''),
+      title: Text(title ?? ''),
+      subtitle: Text(subtitle ?? ''),
+      trailing: Text(trailing ?? ''),
     );
   }
 }
@@ -85,6 +96,24 @@ class CardsListTileItem extends StatelessWidget {
       title: Text(cards.name ?? ''),
       subtitle: Text(cards.cardNumber ?? ''),
       trailing: Text(cards.amount ?? ''),
+    );
+  }
+}
+
+class PageHeader extends StatelessWidget {
+  final String? title;
+  final double? bottom;
+  const PageHeader({Key? key, this.title, this.bottom}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 20.0,
+        right: 17.0,
+        bottom: bottom ?? 20,
+      ),
+      child: Text(title ?? ""),
     );
   }
 }
